@@ -5,11 +5,11 @@ Contributors: Thomas Flynn, Emily Wilkinson
 Summary: README file for the SHAREing assessment templates repository
 ---
 
-# <img src='./images/logo.svg' width=90 style="vertical-align:middle" /> SHAREing: High-level performance assessment notebook
+# <img src='./images/logo.svg' width=90 style="vertical-align:middle" /> SHAREing: Performance Assessment Templates
 
 **This repository is in a very early stage of development**
 
-This repository is part of the [SHAREing](https://shareing-dri.github.io/) project and is focused on conducting high-level performance assessments of research software.
+This repository is part of the [SHAREing](https://shareing-dri.github.io/) project and is focused on conducting pre-assessment and high-level performance assessments of research software.
 We use a markdown document and set of associated scripts to generate graphs during the high-level assessment.
 
 ## Setup
