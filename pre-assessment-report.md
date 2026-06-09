@@ -11,7 +11,7 @@ Summary: Pre-assessment report template document
 >
 > 1. Guidance throughout this template is provided using information boxes, along with example text and placeholders. The example text is not meant to be a complete comment, but a suggestion to get you started. Please remove the information boxes and replace the example text in your report.
 >
-> 2. The template is based on Section 3 of the [performance assessment guidebook](https://shareing-dri.github.io/performance-assessment/guidebook). However, the guidebook should not be necessary to perform the pre-assessment using this template.
+> 2. The template is based on Chapter 4 of the [performance assessment guidebook](https://shareing-dri.github.io/performance-assessment/guidebook). However, the guidebook should not be necessary to perform the pre-assessment using this template.
 >
 > 3. This template is not exhaustive, but should provide the framework for completing a pre-assessment using the information submitted via the [assessment submission form](https://forms.office.com/Pages/ResponsePage.aspx?id=i9hQcmhLKUW-RNWaLYpvlIUXnqx3D81Bt-KemxGOyY5UOU9RQkFSOE5UU1Y1QVZNS0QyNlFYNjRNOS4u), by the submitter.
 
