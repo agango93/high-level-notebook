@@ -42,9 +42,9 @@ The Core and I/O rubrics do not require significant calculation to complete so n
 the point that this is being written, the GPU and Inter-node rubrics do not yet have a fixed workflow (2026-03-19).
 Below we list the usage of each script for the high-level assessment.
 
-### `intranode_times_to_graph.py`
+### `intranode.py`
 
-Intra-node performance analysis is located in the `intranode_times_to_graph.py` script.
+Intra-node performance analysis is located in the `intranode.py` script.
 
 When called as a script, it takes data input from the standard input or a unix pipe. It can take either CSV or Markdown
 table as input. For demonstration purposes, suppose we have the data
@@ -92,7 +92,7 @@ it can be passed exactly the same as `times.csv` was.
 There are a variety of other usage flags, details of which can be found with
 
 ```shell
-$ ./scripts/intranode_times_to_graph.py --help
+$ ./scripts/intranode.py --help
 ```
 
 Internally, this script contains three useful functions which could be used from other code:

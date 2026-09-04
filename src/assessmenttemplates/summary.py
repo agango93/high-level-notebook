@@ -2,7 +2,6 @@
 
 import matplotlib.pyplot as plt
 import numpy as np
-import argparse as ap
 import sys
 import os
 
@@ -10,10 +9,11 @@ from enum import StrEnum, auto
 
 DEFAULT_FILE = "images/summary.png"
 
+
 class Rubric(StrEnum):
-    CPU   = auto()
-    GPU   = auto()
-    IO    = auto()
+    CPU = auto()
+    GPU = auto()
+    IO = auto()
     INTRA = auto()
     INTER = auto()
     UNKNOWN = auto()
@@ -41,7 +41,7 @@ def summary_to_spiderweb(rubrics: list[tuple[str, float]]) -> plt.Figure:
     :param rubrics: list of (rubric, 0-to-1-normalised score)
     :return: matplotlib figure
     """
-    
+
     rubrics = np.array(rubrics).transpose()
     scores = rubrics[1].astype(float)
     names = rubrics[0]
@@ -57,10 +57,11 @@ def summary_to_spiderweb(rubrics: list[tuple[str, float]]) -> plt.Figure:
 
     ax.set_xticks(angles[:-1])
     ax.set_xticklabels(names)
-    
+
     ax.set_title("Rubric Scores", fontsize=14)
 
     return fig
+
 
 def summary_to_bar_chart(rubrics: list[tuple[int, float]]) -> plt.Figure:
     """ 
@@ -77,34 +78,37 @@ def summary_to_bar_chart(rubrics: list[tuple[int, float]]) -> plt.Figure:
 
     ax.bar(names, scores)
     ax.set_ylim([0., 1.])
-    
+
     # Rotate labels so they don't overlap
     fig.autofmt_xdate()
 
     return fig
 
-def parse_args():
-    parser = ap.ArgumentParser(
-        prog="summary.py",
-        description="Tools to generate a spiderweb diagram or bar graph for the SHAREing high-level performance assessment. "+_main.__doc__,
-    )
 
-    #parser.add_argument("-h", "--help", action="help", help="Show this help message and exit")
-    parser.add_argument("--version", action="version", version="%(prog)s 1.0", help="Show program version number and exit")
+def summary_add_args(main_parser):
+    parser = main_parser.add_parser("summary",
+                                    description=f"Generate a spiderweb diagram or bar graph for the SHAREing "
+                                                "high-level performance assessment." + summary_main.__doc__)
+
+    # parser.add_argument("-h", "--help", action="help", help="Show this help message and exit")
+    parser.add_argument("--version", action="version", version="%(prog)s 1.0",
+                        help="Show program version number and exit")
 
     parser.add_argument("-b", "--bar", action="store_true", help="Output a bar chart instead of a spiderweb")
     parser.add_argument("-d", "--default", action="store_true", help=f"Output to the default file, '{DEFAULT_FILE}'")
     parser.add_argument("-v", "--verbose", action="store_true", help="Print extra debug outputs")
-    parser.add_argument("-s", "--stdout-graph", action="store_true", help="Output image data to stdout (useful for piping)")
+    parser.add_argument("-s", "--stdout-graph", action="store_true",
+                        help="Output image data to stdout (useful for piping)")
     parser.add_argument("--svg", action="store_true", help="Output graph as SVG to default file rather than PNG")
 
     parser.add_argument("-o", "--output", help="Specify an output file")
 
-    args = parser.parse_args()
 
+def summary_parse_args(unparsed_args):
+    args = unparsed_args
     if args.verbose:
         print(f"args: {args}")
-    
+
     if args.default and not args.output:
         if args.verbose:
             print(f"STATUS: Setting output to default filepath '{DEFAULT_FILE}'")
@@ -116,19 +120,21 @@ def parse_args():
         print("WARNING: Specifying output file overrides request to output to default file.")
 
     if args.svg and not args.default:
-        print("WARNING: svg flag only has an effect when outputting to the default file. Matplotlib will output to svg if you specify a filename with file ending '.svg'")
+        print(
+            "WARNING: svg flag only has an effect when outputting to the default file. Matplotlib will output to svg if you specify a filename with file ending '.svg'")
 
     return args
 
-def _main():
-    '''
+
+def summary_main(unparsed_args):
+    """
     This script may be passed either a markdown table containing thread count, time, and (optional) parallel efficiency,
     or by passing CSV thread count, time.
 
     It can output a matplotlib graph and a markdown formatted table with all three columns filled in.
-    '''
+    """
 
-    args = parse_args()
+    args = summary_parse_args(unparsed_args)
 
     is_pipe = not os.isatty(sys.stdin.fileno())
 
@@ -141,7 +147,7 @@ def _main():
         if line.strip() == '':
             break
         lines.append(line)
-        
+
     ####################
     # INPUT PROCESSING #
     ####################
@@ -194,8 +200,5 @@ def _main():
         fig.savefig(args.output)
     if args.stdout_graph:
         fig.savefig(sys.stdout)
-    if not args.stdout_graph and not args.output: # Only view in window if we haven't already output somewhere else
+    if not args.stdout_graph and not args.output:  # Only view in window if we haven't already output somewhere else
         plt.show()
-    
-if __name__ == "__main__":
-    _main()
