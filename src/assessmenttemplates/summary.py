@@ -18,20 +18,21 @@ class Rubric(StrEnum):
     INTER = auto()
     UNKNOWN = auto()
 
-    def from_string(from_str: str):
-        match from_str.lower():
-            case s if s.startswith(Rubric.CPU):
-                return Rubric.CPU
-            case s if s.startswith(Rubric.GPU):
-                return Rubric.GPU
-            case s if s.startswith(Rubric.IO):
-                return Rubric.IO
-            case s if s.startswith(Rubric.INTRA):
-                return Rubric.INTRA
-            case s if s.startswith(Rubric.INTER):
-                return Rubric.INTER
-            case _:
-                return Rubric.UNKNOWN
+
+def from_string(from_str: str):
+    match from_str.lower():
+        case s if s.startswith(Rubric.CPU):
+            return Rubric.CPU
+        case s if s.startswith(Rubric.GPU):
+            return Rubric.GPU
+        case s if s.startswith(Rubric.IO):
+            return Rubric.IO
+        case s if s.startswith(Rubric.INTRA):
+            return Rubric.INTRA
+        case s if s.startswith(Rubric.INTER):
+            return Rubric.INTER
+        case _:
+            return Rubric.UNKNOWN
 
 
 def summary_to_spiderweb(rubrics: list[tuple[str, float]]) -> plt.Figure:
@@ -77,7 +78,7 @@ def summary_to_bar_chart(rubrics: list[tuple[int, float]]) -> plt.Figure:
     fig, ax = plt.subplots()
 
     ax.bar(names, scores)
-    ax.set_ylim([0., 1.])
+    ax.set_ylim(0.0, 1.0)
 
     # Rotate labels so they don't overlap
     fig.autofmt_xdate()
@@ -121,17 +122,18 @@ def summary_parse_args(unparsed_args):
 
     if args.svg and not args.default:
         print(
-            "WARNING: svg flag only has an effect when outputting to the default file. Matplotlib will output to svg if you specify a filename with file ending '.svg'")
+            "WARNING: svg flag only has an effect when outputting to the default file. Matplotlib will output to svg if "
+            "you specify a filename with file ending '.svg'")
 
     return args
 
 
 def summary_main(unparsed_args):
     """
-    This script may be passed either a markdown table containing thread count, time, and (optional) parallel efficiency,
+    This script may be passed either a Markdown table containing thread count, time, and (optional) parallel efficiency,
     or by passing CSV thread count, time.
 
-    It can output a matplotlib graph and a markdown formatted table with all three columns filled in.
+    It can output a matplotlib graph and a Markdown formatted table with all three columns filled in.
     """
 
     args = summary_parse_args(unparsed_args)
@@ -187,7 +189,7 @@ def summary_main(unparsed_args):
 
     if args.verbose:
         print("STATUS: generating graph")
-    fig = None
+
     if args.bar:
         fig = summary_to_bar_chart(times)
     else:

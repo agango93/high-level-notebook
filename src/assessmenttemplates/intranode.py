@@ -2,12 +2,11 @@
 
 import matplotlib.pyplot as plt
 import numpy as np
-import argparse as ap
 import sys
 import os
 
 
-def intranode_times_crit_80_60(times: list[tuple[int, float]], args=None) -> (float, float):
+def intranode_times_crit_80_60(times: list[tuple[int, float]]) -> tuple[float, float]:
     """ 
     Calculate the 80% and 60% critical proportions
 
@@ -24,11 +23,11 @@ def intranode_times_crit_80_60(times: list[tuple[int, float]], args=None) -> (fl
     speed_up = serial_time / parallel_times
     efficiency = speed_up / core_counts
 
-    p_crit_80 = max(core_counts[efficiency >= 0.8])
-    p_crit_60 = max(core_counts[efficiency >= 0.6])
+    p_crit_80 = float(max(core_counts[efficiency >= 0.8]))
+    p_crit_60 = float(max(core_counts[efficiency >= 0.6]))
 
-    intra_node_prop_80 = p_crit_80 / max(core_counts)
-    intra_node_prop_60 = p_crit_60 / max(core_counts)
+    intra_node_prop_80 = p_crit_80 / float(max(core_counts))
+    intra_node_prop_60 = p_crit_60 / float(max(core_counts))
 
     return intra_node_prop_80, intra_node_prop_60
 
@@ -38,7 +37,9 @@ def intranode_times_to_graph(times: list[tuple[int, float]], args=None) -> plt.F
     Create matplotlib graph
 
     :param times: list of (core count, time taken in seconds)
+    :param args: arguments from arg parser
     :return: matplotlib figure
+
     """
 
     # Extract core count and times from the list as separate arrays
@@ -53,8 +54,8 @@ def intranode_times_to_graph(times: list[tuple[int, float]], args=None) -> plt.F
     if args and args.verbose:
         print(f"Calculated efficiencies: {efficiency}")
 
-    p_crit_80 = max(core_counts[efficiency >= 0.8])
-    p_crit_60 = max(core_counts[efficiency >= 0.6])
+    p_crit_80 = float(max(core_counts[efficiency >= 0.8]))
+    p_crit_60 = float(max(core_counts[efficiency >= 0.6]))
 
     fig, ax = plt.subplots()
     ax.set_xlabel(r'$p$')
@@ -73,7 +74,7 @@ def intranode_times_to_graph(times: list[tuple[int, float]], args=None) -> plt.F
 
 def intranode_times_to_markdown(times: list[tuple[int, float]]) -> str:
     """
-    Generate markdown table with 
+    Generate Markdown table with
     """
 
     times = np.transpose(np.array(times))
@@ -193,10 +194,10 @@ def intranode_parse_args(unparsed_args):
 
 def intranode_main(unparsed_args):
     """
-    This script may be passed either a markdown table containing thread count, time, and (optional) parallel efficiency,
+    This script may be passed either a Markdown table containing thread count, time, and (optional) parallel efficiency,
     or by passing CSV thread count, time.
 
-    It can output a matplotlib graph and a markdown formatted table with all three columns filled in.
+    It can output a matplotlib graph and a Markdown formatted table with all three columns filled in.
     """
 
     args = intranode_parse_args(unparsed_args)
