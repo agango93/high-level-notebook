@@ -12,8 +12,17 @@ def _main():
 
     parser.add_argument("--version",
                         action="version",
-                        version="%(prog)s 1.1",
+                        version="%(prog)s 1.2",
                         help="Show program version number and exit.")
+    parser.add_argument("-v", "--verbose", action="store_true", help="Print extra debug outputs.")
+    parser.add_argument("-d", "--default", action="store_true",
+                        help="Output any requested outputs with unspecified file to their default file.")
+    parser.add_argument("--svg", action="store_true",
+                        help="Output graph to default file will output SVG rather than PNG.")
+    parser.add_argument("-o", "--output",
+                        help="Specify an output file. This can only be used if exactly one output type is requested.")
+    parser.add_argument("-s", "--stdout-graph", action="store_true",
+                        help="Output image data to stdout (useful for piping)")
 
     sub_parsers = parser.add_subparsers(dest="metric", required=True, help="Metric for which plots are to be "
                                                                            "generated.")

@@ -91,18 +91,7 @@ def summary_add_args(main_parser):
                                     description=f"Generate a spiderweb diagram or bar graph for the SHAREing "
                                                 "high-level performance assessment." + summary_main.__doc__)
 
-    # parser.add_argument("-h", "--help", action="help", help="Show this help message and exit")
-    parser.add_argument("--version", action="version", version="%(prog)s 1.0",
-                        help="Show program version number and exit")
-
     parser.add_argument("-b", "--bar", action="store_true", help="Output a bar chart instead of a spiderweb")
-    parser.add_argument("-d", "--default", action="store_true", help=f"Output to the default file, '{DEFAULT_FILE}'")
-    parser.add_argument("-v", "--verbose", action="store_true", help="Print extra debug outputs")
-    parser.add_argument("-s", "--stdout-graph", action="store_true",
-                        help="Output image data to stdout (useful for piping)")
-    parser.add_argument("--svg", action="store_true", help="Output graph as SVG to default file rather than PNG")
-
-    parser.add_argument("-o", "--output", help="Specify an output file")
 
 
 def summary_parse_args(unparsed_args):

@@ -106,29 +106,17 @@ def intranode_add_args(main_parser):
                                            "the standard console output." + intranode_main.__doc__
                                     )
 
-    # parser.add_argument("-h", "--help", action="help", help="Show this help message and exit")
-    parser.add_argument("--version", action="version", version="%(prog)s 1.1",
-                        help="Show program version number and exit")
-
     parser.add_argument("-g", "--graph", action="store_true", help="Generate graph")
     parser.add_argument("-m", "--markdown", action="store_true", help="Generate markdown table")
     parser.add_argument("-c", "--critical-points", action="store_true",
                         help="Calculate 80 and 60 percent critical values")
     parser.add_argument("-a", "--output-all", action="store_true", help="Output all output types")
-    parser.add_argument("-d", "--default", action="store_true",
-                        help="Output any requested outputs with unspecified file to their default file.")
-    parser.add_argument("-v", "--verbose", action="store_true", help="Print extra debug outputs")
-    parser.add_argument("-s", "--stdout-graph", action="store_true", help="Output image data to stdout")
-    parser.add_argument("--svg", action="store_true",
-                        help="Output graph to default file will output SVG rather than PNG")
-
-    parser.add_argument("-o", "--output",
-                        help="Specify an output file. This can only be used if exactly one output type is requested")
     parser.add_argument("--graph-file", help="Specify an output file for the graph. Default: 'images/intranode.png'")
     parser.add_argument("--markdown-file",
                         help="Specify an output file for the markdown table. Default: 'intranode_table.md'")
     parser.add_argument("--critical-points-file",
-                        help="Specify an output file for the calculated critical values. Default: 'intranode_critical_proportions.txt'")
+                        help="Specify an output file for the calculated critical values. "
+                             "Default: 'intranode_critical_proportions.txt'")
 
 
 def intranode_parse_args(unparsed_args):
