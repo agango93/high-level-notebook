@@ -188,17 +188,23 @@ def intranode_main(unparsed_args):
 
     args = intranode_parse_args(unparsed_args)
 
-    is_pipe = not os.isatty(sys.stdin.fileno())
-
-    if not is_pipe:
-        print(f"Please paste the data below, ending with an empty line:")
+    is_pipe = False
 
     lines = []
 
-    for line in sys.stdin:
-        if line.strip() == '':
-            break
-        lines.append(line)
+    if args.input:
+        with open(args.input, 'r') as input_table:
+            lines = input_table.readlines()
+    else:
+        is_pipe = not os.isatty(sys.stdin.fileno())
+
+        if not is_pipe:
+            print(f"Please paste the data below, ending with an empty line:")
+
+        for line in sys.stdin:
+            if line.strip() == '':
+                break
+            lines.append(line)
 
     ####################
     # INPUT PROCESSING #
@@ -207,7 +213,7 @@ def intranode_main(unparsed_args):
     if args.verbose:
         print("STATUS: processing input")
 
-    if is_pipe and args.verbose:
+    if (args.input or is_pipe) and args.verbose:
         print("Inputted table:")
         print("".join(lines))
 

@@ -19,6 +19,11 @@ def _main():
                         help="Output any requested outputs with unspecified file to their default file.")
     parser.add_argument("--svg", action="store_true",
                         help="Output graph to default file will output SVG rather than PNG.")
+    parser.add_argument("-i", "--input",
+                        default=None,
+                        required=False,
+                        help="Specify an optional input file containing the table for the metric."
+                             "requested. Will use stdin if none specified.")
     parser.add_argument("-o", "--output",
                         help="Specify an output file. This can only be used if exactly one output type is requested.")
     parser.add_argument("-s", "--stdout-graph", action="store_true",
