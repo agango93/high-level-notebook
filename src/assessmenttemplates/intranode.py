@@ -112,7 +112,7 @@ def intranode_add_args(main_parser):
                         help="Calculate 80 and 60 percent critical values.")
     parser.add_argument("-a", "--output-all", action="store_true", help="Output all output types.")
     parser.add_argument("--graph-file", help="Specify an output file for the graph.",
-                        default='Default: images/intranode.png')
+                        default='images/intranode.png')
     parser.add_argument("--markdown-file",
                         help="Specify an output file for the markdown table.",
                         default='intranode_table.md')
@@ -145,7 +145,7 @@ def intranode_parse_args(unparsed_args):
         print("ERROR: Single specified output file is not valid when multiple outputs are requested at once.")
         exit()
 
-    if args.output != "stdout":
+    if args.output and args.output != "stdout":
         # Only one of the following is possible
         if args.graph:
             args.graph_file = args.output
