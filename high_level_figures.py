@@ -1,6 +1,6 @@
 import argparse as ap
-import assessmenttemplates.intranode as intranode
-import assessmenttemplates.summary as summary
+import assessmenttemplate.intranode as intranode
+import assessmenttemplate.summary as summary
 
 
 def _main():
@@ -10,9 +10,16 @@ def _main():
         epilog="Unless an output flag is specified, a requested output will be echoed to the standard console output."
     )
 
+    # Source - https://stackoverflow.com/a/75100875
+    # Posted by sinoroc, modified by community. See post 'Timeline' for change history
+    # Retrieved 2026-09-07, License - CC BY-SA 4.0
+
+    import importlib.metadata
+    version = importlib.metadata.version('assessmenttemplate')
+
     parser.add_argument("--version",
                         action="version",
-                        version="%(prog)s 1.2",
+                        version=f"%(prog)s {version}",
                         help="Show program version number and exit.")
     parser.add_argument("-v", "--verbose", action="store_true", help="Print extra debug outputs.")
     parser.add_argument("-d", "--default", action="store_true",

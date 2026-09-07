@@ -10,12 +10,12 @@ authors = [
     { name = "Ananya Gangopadhyay", email = "ananya.gangopadhyay@durham.ac.uk" },
 ]
 
-name = "assessmenttemplates"
-version = "1.1"
+name = "assessmenttemplate"
+version = "1.2"
 
 dependencies = [
     "numpy",
-    "matplotlib",
+    "matplotlib"
 ]
 
 requires-python = ">= 3.8"
