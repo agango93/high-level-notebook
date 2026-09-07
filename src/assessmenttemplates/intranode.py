@@ -106,17 +106,19 @@ def intranode_add_args(main_parser):
                                            "the standard console output." + intranode_main.__doc__
                                     )
 
-    parser.add_argument("-g", "--graph", action="store_true", help="Generate graph")
-    parser.add_argument("-m", "--markdown", action="store_true", help="Generate markdown table")
+    parser.add_argument("-g", "--graph", action="store_true", help="Generate graph.")
+    parser.add_argument("-m", "--markdown", action="store_true", help="Generate markdown table.")
     parser.add_argument("-c", "--critical-points", action="store_true",
-                        help="Calculate 80 and 60 percent critical values")
-    parser.add_argument("-a", "--output-all", action="store_true", help="Output all output types")
-    parser.add_argument("--graph-file", help="Specify an output file for the graph. Default: 'images/intranode.png'")
+                        help="Calculate 80 and 60 percent critical values.")
+    parser.add_argument("-a", "--output-all", action="store_true", help="Output all output types.")
+    parser.add_argument("--graph-file", help="Specify an output file for the graph.",
+                        default='Default: images/intranode.png')
     parser.add_argument("--markdown-file",
-                        help="Specify an output file for the markdown table. Default: 'intranode_table.md'")
+                        help="Specify an output file for the markdown table.",
+                        default='intranode_table.md')
     parser.add_argument("--critical-points-file",
-                        help="Specify an output file for the calculated critical values. "
-                             "Default: 'intranode_critical_proportions.txt'")
+                        help="Specify an output file for the calculated critical values.",
+                        default='intranode_critical_proportions.txt')
 
 
 def intranode_parse_args(unparsed_args):
@@ -131,29 +133,25 @@ def intranode_parse_args(unparsed_args):
 
     if args.default:
         if args.verbose:
-            print(f"Setting default files")
-        if not args.graph_file and not args.stdout_graph:
-            if args.svg:
-                args.graph_file = 'images/intranode.svg'
-            else:
-                args.graph_file = 'images/intranode.png'
-        if not args.markdown_file:
-            args.markdown_file = 'intranode_table.md'
-        if not args.critical_points_file:
-            args.critical_points_file = 'intranode_critical_proportions.txt'
+            print(f"Using default files.")
+        args.graph_file = 'images/intranode.svg' if args.svg else 'images/intranode.png'
+
     if args.svg and (args.default or args.graph_file or (args.graph and args.output)):
         print(
-            "WARNING: svg flag only has an effect when outputting to the default file. Matplotlib will output to svg if you specify a filename with file ending '.svg'")
+            "WARNING: svg flag only has an effect when outputting to the default file. "
+            "Matplotlib will output to svg if you specify a filename with file ending '.svg'")
 
     if args.graph + args.markdown + args.critical_points >= 2 and args.output:
-        print("ERROR: single specified output file is not valid when multiple outputs are requested at once.")
+        print("ERROR: Single specified output file is not valid when multiple outputs are requested at once.")
         exit()
-    elif args.output != "stdout":
-        if not args.graph_file:
+
+    if args.output != "stdout":
+        # Only one of the following is possible
+        if args.graph:
             args.graph_file = args.output
-        if not args.markdown_file:
+        elif args.markdown:
             args.markdown_file = args.output
-        if not args.critical_points_file:
+        elif args.critical_points:
             args.critical_points_file = args.output
 
     # "stdout" acts as an undocumented magic file to redirect an output to stdout if the default flag is set.
@@ -161,9 +159,9 @@ def intranode_parse_args(unparsed_args):
     # file is.
     if args.stdout_graph and args.graph_file:
         if args.graph_file == "stdout":
-            print("WARNING: Graph file does not need to be specified as 'stdout' if '-s' flag specified")
+            print("WARNING: Graph file does not need to be specified as 'stdout' if '-s' flag specified.")
         else:
-            print("WARNING: Requested to output graph to both stdout and a file. Limiting to only requested file")
+            print("WARNING: Requested to output graph to both stdout and a file. Limiting to only requested file.")
             args.stdout_graph = None
     if args.graph_file == "stdout":
         args.graph_file = None
@@ -174,7 +172,7 @@ def intranode_parse_args(unparsed_args):
         args.critical_points_file = None
 
     if not args.graph and not args.markdown and not args.critical_points:
-        print("WARNING: No output specified, defaulting to graph only")
+        print("WARNING: No output specified, defaulting to graph only.")
         args.graph = True
 
     return args

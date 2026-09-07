@@ -7,8 +7,6 @@ import os
 
 from enum import StrEnum, auto
 
-DEFAULT_FILE = "images/summary.png"
-
 
 class Rubric(StrEnum):
     CPU = auto()
@@ -91,7 +89,7 @@ def summary_add_args(main_parser):
                                     description=f"Generate a spiderweb diagram or bar graph for the SHAREing "
                                                 "high-level performance assessment." + summary_main.__doc__)
 
-    parser.add_argument("-b", "--bar", action="store_true", help="Output a bar chart instead of a spiderweb")
+    parser.add_argument("-b", "--bar", action="store_true", help="Output a bar chart instead of a spiderweb.")
 
 
 def summary_parse_args(unparsed_args):
@@ -100,19 +98,18 @@ def summary_parse_args(unparsed_args):
         print(f"args: {args}")
 
     if args.default and not args.output:
+        args.output = f"input/summary.{"svg" if args.svg else "png"}"
+
         if args.verbose:
-            print(f"STATUS: Setting output to default filepath '{DEFAULT_FILE}'")
-        if args.svg:
-            args.output = DEFAULT_FILE[:-3] + "svg"
-        else:
-            args.output = DEFAULT_FILE
+            print(f"STATUS: Setting output to default filepath:{args.output}")
+
     elif args.default and args.output:
         print("WARNING: Specifying output file overrides request to output to default file.")
 
     if args.svg and not args.default:
         print(
-            "WARNING: svg flag only has an effect when outputting to the default file. Matplotlib will output to svg if "
-            "you specify a filename with file ending '.svg'")
+            "WARNING: svg flag only has an effect when outputting to the default file. "
+            "Matplotlib will output to svg if you specify a filename with file ending '.svg'")
 
     return args
 
