@@ -193,5 +193,5 @@ def summary_main(unparsed_args):
         fig.savefig(args.output)
     if args.stdout_graph:
         fig.savefig(sys.stdout)
-    if not args.stdout_graph and not args.output:  # Only view in window if we haven't already output somewhere else
+    if args.show:
         plt.show()

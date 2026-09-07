@@ -28,6 +28,8 @@ def _main():
                         help="Specify an output file. This can only be used if exactly one output type is requested.")
     parser.add_argument("-s", "--stdout-graph", action="store_true",
                         help="Output image data to stdout (useful for piping)")
+    parser.add_argument("--show", action="store_true",
+                        help="Show graph in window at runtime.")
 
     sub_parsers = parser.add_subparsers(dest="metric", required=True, help="Metric for which plots are to be "
                                                                            "generated.")

@@ -247,7 +247,7 @@ def intranode_main(unparsed_args):
                 os.makedirs(os.path.dirname(args.graph_file), exist_ok=True)
             # Save figure to file
             fig.savefig(args.graph_file)
-        if not args.stdout_graph and not args.graph_file:
+        if args.show:
             plt.show()
         if args.stdout_graph:
             fig.savefig(sys.stdout)
